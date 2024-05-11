@@ -20,6 +20,18 @@
 
 <template>
   <div>
-    <h1>Index</h1>
+    <Button>menu</Button>
   </div>
 </template>
+
+<style scoped>
+div {
+  /* 50px from navbar and +20px  */
+  padding-top: 70px;
+  /* height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; */
+}
+</style>
