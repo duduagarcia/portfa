@@ -12,7 +12,6 @@ onMounted(() => {
   tl.to(".one span", {
     duration: 3.6,
     y: `-${(one.value.querySelectorAll("*").length - 1) * 100}%`,
-    // stagger: 0.1,
     ease: "power2.inOut",
   })
     .to(
@@ -20,8 +19,6 @@ onMounted(() => {
       {
         duration: 3,
         y: `-${(ten.value.querySelectorAll("*").length - 1) * 100}%`,
-        //   stagger: 0.1,
-
         ease: "power2.inOut",
       },
       0.4
@@ -33,14 +30,12 @@ onMounted(() => {
         y: "-100%",
         ease: "circ.inOut",
       },
-      0.9
+      1
     )
     .to(".bg", {
-      delay: 0.3,
       height: 0,
       ease: "circ.inOut",
-      //   ease: "power2.inOut",
-      duration: 1.4,
+      duration: 1.7,
       onComplete: () => {
         tl_controls.isTransitionStart = false;
       },
@@ -145,5 +140,14 @@ section {
 
 .hundred span {
   text-align: end;
+}
+
+@media screen and (max-width: 700px) {
+  .title {
+    left: 10px;
+    font-size: 6em;
+    bottom: 140px;
+    height: 120px;
+  }
 }
 </style>
