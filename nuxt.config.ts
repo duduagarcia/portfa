@@ -12,4 +12,10 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/main.css"],
+  modules: ["@hypernym/nuxt-gsap"],
+  gsap: {
+    extraPlugins: {
+      scrollTrigger: true,
+    },
+  },
 });
