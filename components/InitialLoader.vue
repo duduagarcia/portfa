@@ -1,20 +1,21 @@
 <script setup lang="ts">
 const { $gsap } = useNuxtApp();
 
-const percentage = ref("000");
-
+// pegando a div pai do número decimal e da unidade
 const ten = ref(undefined);
 const one = ref(undefined);
 
 onMounted(() => {
   const tl = $gsap.timeline();
 
+  // Quando o loader for montado, desativamos o scroll de toda página, para
+  // evitar usuários macacos rolando pela página enquanto o loader está ativo
   document.body.style.overflow = "hidden";
 
-  $gsap.set("#hero", { transformOrigin: "bottom" });
-
+  // ========== começando a tl dando trigger nos números ==========
   tl.to(".one span", {
     duration: 3.6,
+    // Como o número de elementos é dinâmico, pegamos o número de elementos e multiplicamos pela sua altura (100%)
     y: `-${(one.value.querySelectorAll("*").length - 1) * 100}%`,
     ease: "power2.inOut",
   })
@@ -22,6 +23,7 @@ onMounted(() => {
       ".ten span",
       {
         duration: 3,
+        // same shit as before
         y: `-${(ten.value.querySelectorAll("*").length - 1) * 100}%`,
         ease: "power2.inOut",
       },
@@ -30,12 +32,14 @@ onMounted(() => {
     .to(
       ".hundred span",
       {
+        // como a centena tem apenas dois números (0 e 1) fica mais tranquilo
         duration: 2.7,
         y: "-100%",
         ease: "circ.inOut",
       },
       1.4
     )
+    // ========== Fazendo os números do clock desaparecerem ==========
     .to(
       ".hundred",
       {
@@ -66,6 +70,7 @@ onMounted(() => {
       },
       3.1
     )
+    // ========== Dando o scale ==========
     .to(
       ".wrapper",
       {
@@ -75,6 +80,7 @@ onMounted(() => {
       },
       3.3
     )
+    // ========== Zerando a height ==========
     .to(
       ".bg",
       {
@@ -85,6 +91,7 @@ onMounted(() => {
       },
       3.9
     )
+    // ========== Adicionando a altura de volta do hero ==========
     .to(
       "#hero",
       {
@@ -104,7 +111,7 @@ onMounted(() => {
 <template>
   <div class="wrapper">
     <div class="bg"></div>
-    <div class="title">
+    <div class="timer">
       <div class="hundred">
         <span>0</span>
         <span>1</span>
@@ -184,7 +191,7 @@ onMounted(() => {
   transform-origin: bottom;
 }
 
-.title {
+.timer {
   display: flex;
   font-size: 8em;
   font-weight: bold;
@@ -196,7 +203,6 @@ onMounted(() => {
   bottom: 0px;
   left: 30px;
   z-index: 1000;
-  /* background-color: aqua; */
 }
 
 .hundred,
@@ -211,7 +217,7 @@ onMounted(() => {
 }
 
 @media screen and (max-width: 700px) {
-  .title {
+  .timer {
     left: 10px;
     font-size: 6em;
     bottom: 140px;

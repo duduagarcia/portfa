@@ -2,11 +2,27 @@
 const { $gsap } = useNuxtApp();
 
 onMounted(() => {
+  // NÃO SEI SE ESSE CÓDIGO AINDA É NECESSÁRIO, VEREMOS CONFORME ADICIONARMOS OS LINKS PARA AS OUTRAS PÁGINAS
+  // if (tl_controls.isTransitionStart == false) {
+  //   const hero = document.getElementById("hero");
+
+  //   $gsap.to(hero, {
+  //     height: "100vh",
+  //     duration: 2,
+  //     ease: "power4.inOut",
+  //     onComplete: () => {
+  //       document.body.style.overflow = "auto";
+  //       tl_controls.isTransitionStart = false;
+  //     },
+  //   });
+  // }
+
   const textElements = $gsap.utils.toArray(".intro");
 
-  console.log(textElements);
-  console.log($gsap);
-
+  // Adicionamos o GSAP de outras sessões APENAS depois desse timeout de 4.4s
+  // Para que a animação do loader seja a primeira a ser carregada e o v-show
+  // ativar novamente, por algum raio de motivo o gsap buga o scrolltrigger por
+  // causa do v-show
   setTimeout(() => {
     textElements.forEach((text) => {
       $gsap.to(text, {
@@ -17,7 +33,6 @@ onMounted(() => {
           start: "center 90%",
           end: "center 20%",
           scrub: true,
-          markers: true,
         },
       });
     });
@@ -26,33 +41,27 @@ onMounted(() => {
 </script>
 
 <template>
-  <InitialLoader />
-
-  <main>
-    <section id="hero"></section>
-    <div v-show="tl_controls.isTransitionStart == false">
-      <section id="introduction">
-        <div class="container">
-          <h2 class="intro">A problem solver</h2>
-          <h2 class="intro">guided by research,</h2>
-          <h2 class="intro">boosted by innovation,</h2>
-          <h2 class="intro">that designes with purpose</h2>
-          <h2 class="intro">and develops for people</h2>
-          <h2 class="intro">to achieve tangible results.</h2>
-        </div>
-      </section>
-      <section id="works"><h1>oi</h1></section>
-    </div>
-  </main>
+  <InitialLoader v-if="tl_controls.isTransitionStart" />
+  <section id="hero"></section>
+  <!-- Carregar as outras sessões no DOM porém não mostrar elas -->
+  <!-- Só mostramos elas quando a animação do loader carrega 100% -->
+  <div v-show="tl_controls.isTransitionStart == false">
+    <section id="introduction">
+      <div class="container">
+        <h2 class="intro">A problem solver</h2>
+        <h2 class="intro">guided by research,</h2>
+        <h2 class="intro">boosted by innovation,</h2>
+        <h2 class="intro">that designes with purpose</h2>
+        <h2 class="intro">and develops for people</h2>
+        <h2 class="intro">to achieve tangible results.</h2>
+      </div>
+    </section>
+    <section id="works"><h1>oi</h1></section>
+  </div>
 </template>
 
 <style scoped>
-main {
-  width: 100vw;
-  max-width: 100%;
-  background-color: #000;
-}
-
+/* ========== COMEÇO DOS ESTILOS PADRÕES ========== */
 section {
   width: 100vw;
   max-width: 100%;
@@ -66,7 +75,7 @@ section {
   padding-left: 20px;
   padding-right: 20px;
 }
-
+/* ========== FIM DOS ESTILOS PADRÕES ========== */
 #hero {
   /* 50px from navbar and +20px  */
   padding-top: 70px;
@@ -79,7 +88,7 @@ section {
 #introduction {
   width: 100vw;
   max-width: 100%;
-  background-color: green;
+  background-color: var(--white);
 }
 
 #introduction .container {
