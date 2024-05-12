@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/main.css"],
-  modules: ["@hypernym/nuxt-gsap"],
+  modules: ["@hypernym/nuxt-gsap", "@nuxt/image"],
   gsap: {
     extraPlugins: {
       scrollTrigger: true,
