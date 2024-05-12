@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const { $gsap } = useNuxtApp();
 
 const percentage = ref("000");
@@ -8,6 +8,10 @@ const one = ref(undefined);
 
 onMounted(() => {
   const tl = $gsap.timeline();
+
+  document.body.style.overflow = "hidden";
+
+  $gsap.set("#hero", { transformOrigin: "bottom" });
 
   tl.to(".one span", {
     duration: 3.6,
@@ -26,25 +30,79 @@ onMounted(() => {
     .to(
       ".hundred span",
       {
-        duration: 1.5,
+        duration: 2.7,
         y: "-100%",
         ease: "circ.inOut",
       },
-      1
+      1.4
     )
-    .to(".bg", {
-      height: 0,
-      ease: "circ.inOut",
-      duration: 1.7,
-      onComplete: () => {
-        tl_controls.isTransitionStart = false;
+    .to(
+      ".hundred",
+      {
+        duration: 1,
+        y: "-100vh",
+        ease: "power4.inOut",
+        stagger: 0.1,
       },
-    });
+      3.1
+    )
+    .to(
+      ".ten",
+      {
+        duration: 1,
+        y: "-100vh",
+        ease: "power4.inOut",
+        stagger: 0.1,
+      },
+      3.1
+    )
+    .to(
+      ".one",
+      {
+        duration: 1,
+        y: "-100vh",
+        ease: "power4.inOut",
+        stagger: 0.1,
+      },
+      3.1
+    )
+    .to(
+      ".wrapper",
+      {
+        scale: 0.5,
+        ease: "power4.inOut",
+        duration: 1,
+      },
+      3.3
+    )
+    .to(
+      ".bg",
+      {
+        duration: 0.6,
+        ease: "power4.inOut",
+
+        height: "0px",
+      },
+      3.9
+    )
+    .to(
+      "#hero",
+      {
+        height: "100vh",
+        duration: 0.8,
+        ease: "power4.inOut",
+        onComplete: () => {
+          document.body.style.overflow = "auto";
+          tl_controls.isTransitionStart = false;
+        },
+      },
+      3.5
+    );
 });
 </script>
 
 <template>
-  <section>
+  <div class="wrapper">
     <div class="bg"></div>
     <div class="title">
       <div class="hundred">
@@ -98,29 +156,35 @@ onMounted(() => {
         <span>0</span>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <style scoped>
-section {
+.wrapper {
   width: 100vw;
   max-width: 100%;
   height: 100vh;
+  background-color: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   z-index: 1000;
-  /* background-color: var(--white); */
+  overflow: hidden;
+
+  display: flex;
+  justify-content: flex-start;
 }
 
 .bg {
   width: 100%;
   height: 100%;
-  background-color: var(--black_3);
+  background-color: var(--black_1);
+  transform-origin: bottom;
 }
 
 .title {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
   display: flex;
   font-size: 8em;
   font-weight: bold;
@@ -128,6 +192,10 @@ section {
 
   height: 193px;
   overflow: hidden;
+  position: absolute;
+  bottom: 0px;
+  left: 30px;
+  z-index: 1000;
   /* background-color: aqua; */
 }
 
